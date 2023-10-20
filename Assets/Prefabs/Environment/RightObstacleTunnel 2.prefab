@@ -135,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4007072840529693205}
   m_Layer: 0
-  m_Name: DefaultTunnel
+  m_Name: RightObstacleTunnel 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,8 +149,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828009144039890359}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -1, w: 0.00000050576216}
-  m_LocalPosition: {x: 0, y: 0, z: 190}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

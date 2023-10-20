@@ -5,9 +5,15 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement playerMovement;
 
-    public void OnMove(InputAction.CallbackContext input)
+    public void OnMoveVertical(InputAction.CallbackContext input)
     {
-        Vector2 ActualInput = input.ReadValue<Vector2>();
-        playerMovement.MovePlayer(ActualInput);
+        float ActualInput = input.ReadValue<float>();
+        playerMovement.MovePlayerVertical(ActualInput);
+    }
+
+    public void OnMoveHorizontal(InputAction.CallbackContext input)
+    {
+        float ActualInput = input.ReadValue<float>();
+        playerMovement.MovePlayerHorizontal(ActualInput);
     }
 }

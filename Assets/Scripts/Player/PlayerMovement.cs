@@ -1,11 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
-    private Vector2 inputMovement;
+    private float inputMovementH;
+    private float inputMovementV;
     private Rigidbody rb;
 
     private void Awake()
@@ -14,11 +13,17 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector3 finalMovemnt = new Vector3(inputMovement.x, inputMovement.y, 0);
+        Vector3 finalMovemnt = new Vector3(inputMovementH, inputMovementV, 0);
+        Debug.Log(finalMovemnt);
         rb.AddForce(finalMovemnt * speed, ForceMode.VelocityChange);
     }
-    public void MovePlayer(Vector2 input)
+    public void MovePlayerHorizontal(float input)
     {
-        inputMovement = input;
+        inputMovementH = input;
+    } 
+    
+    public void MovePlayerVertical(float input)
+    {
+        inputMovementV = input;
     }
 }
