@@ -1,69 +1,47 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TunnelLogic : MonoBehaviour
 {
-    [SerializeField] private Transform endPoint;
-    [SerializeField] private Transform StartPoint;
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform spawnPoint;
 
-    [SerializeField] private tunnel[] Tunnels;
+    [SerializeField] private List<GameObject> terrainList;
+    [SerializeField] private GameObject[] prefabTerrains;
 
-    [SerializeField] private GameObject defaultTunnel;
-    [SerializeField] private GameObject[] PrefabObstacles;
+    [SerializeField] private float spawnDistance;
+    [SerializeField] private float eliminateDistance;
 
-    [SerializeField] private float speed;
-    [SerializeField] private int tunnelsBeforeObstacle;
-    private int tunnelCounter;
-
-    private void FixedUpdate()
+    void Update()
     {
-        moveTunnel();
+        if (Vector3.Distance(spawnPoint.position, player.position) < spawnDistance)
+        {
+            SpawnNewTerrain();
+        }
+
+        EliminateTerrain();
     }
 
-    private void moveTunnel()
+    void SpawnNewTerrain()
     {
-        for (int i = 0; i < Tunnels.Length; i++)
+        GameObject terrainPrefab = prefabTerrains[Random.Range(0, prefabTerrains.Length)];
+        GameObject newTerrain = Instantiate(terrainPrefab, spawnPoint.position, spawnPoint.rotation);
+        spawnPoint.position = newTerrain.GetComponent<SingleTerrain>().finalPoint.position;
+        terrainList.Add(newTerrain);
+    }
+
+    void EliminateTerrain()
+    {
+        for (int i = 0; i < terrainList.Count; i++)
         {
-            if (IsTunnelEnd(Tunnels[i].tunnelTransform))
+            if (player.position.z - terrainList[i].transform.position.z > eliminateDistance)
             {
-                Tunnels[i].tunnelTransform.position = StartPoint.position;
-                Tunnels[i].tunnelTransform.rotation = StartPoint.rotation;
-                tunnelCounter++;
-
-                if (tunnelCounter >= tunnelsBeforeObstacle)
-                {
-                    Tunnels[i].tunnelAsset = PrefabObstacles[Random.Range(0, PrefabObstacles.Length)];
-                    tunnelCounter = 0;
-                }
-                else
-                {
-                    Tunnels[i].tunnelAsset = defaultTunnel;
-                    StartPoint.Rotate(0, 0, Random.Range(1, 4) * 90);
-                }
-
-            }
-            else
-            {
-                Tunnels[i].tunnelTransform.Translate(-transform.forward * speed * Time.deltaTime);
+                Destroy(terrainList[i]);
+                terrainList.RemoveAt(i);
+                i--;
             }
         }
     }
-
-    private bool IsTunnelEnd(Transform tunnel)
-    {
-        if (tunnel.position.z <= endPoint.position.z)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-}
-
-[System.Serializable]
-public class tunnel
-{
-    public Transform tunnelTransform;
-    public GameObject tunnelAsset;
 }
