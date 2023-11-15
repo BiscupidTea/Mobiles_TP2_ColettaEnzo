@@ -40,7 +40,7 @@ public class TunnelLogic : MonoBehaviour
             {
                 Destroy(terrainList[i]);
                 terrainList.RemoveAt(i);
-                i--;
+                break;
             }
         }
     }
