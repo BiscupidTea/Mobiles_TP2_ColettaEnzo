@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "MoveVertical",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "86319ccb-7bee-491d-b5fd-a3298c79b270",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

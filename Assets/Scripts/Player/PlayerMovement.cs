@@ -5,7 +5,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float angularSpeed;
     [SerializeField] private float speed;
-    private Quaternion baseOrientation;
     private Rigidbody rb;
     private float inputMovementH;
     private float inputMovementV;
