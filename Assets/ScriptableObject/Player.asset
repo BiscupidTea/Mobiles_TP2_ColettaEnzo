@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78cf4e8997c7f0459ae4e9910498fc0, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  totalMoney: 405
-  distance: 51
-  maxDistance: 51
-  SelectedSpaceShip: {fileID: -927199367670048503, guid: 6f679f9f2b4323f4eb8c1e642c986c87, type: 3}
+  totalLives: 3
+  totalMoney: 0
+  distance: 0
+  maxDistance: 0
+  SelectedSpaceShip: {fileID: 2789401429998543385, guid: adbdb96776522ef41bdaad8bf35e50f2, type: 3}

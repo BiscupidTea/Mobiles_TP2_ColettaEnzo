@@ -15,13 +15,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Text disteanceText;
     [SerializeField] private Text cointText;
 
-    [SerializeField] private Image stateImage;
-    [SerializeField] private Text stateText;
+    [SerializeField] private Image textureState1;
+    [SerializeField] private Image textureState2;
+    [SerializeField] private Image textureState3;
 
-    [SerializeField] private Sprite textureState1;
-    [SerializeField] private Sprite textureState2;
-    [SerializeField] private Sprite textureState3;
-    [SerializeField] private Sprite textureStateInvencible;
+    [SerializeField] private GameObject particle1;
+    [SerializeField] private GameObject particle2;
 
     private int totalLives;
     private float actualInvencibleTime;
@@ -59,21 +58,11 @@ public class PlayerManager : MonoBehaviour
             finishGame.Invoke();
         }
 
-        disteanceText.text = tunnelLogic.FinalDistance.ToString();
+        disteanceText.text = tunnelLogic.FinalDistance.ToString() + "m";
         cointText.text = totalCoins.ToString();
         maxDistance = tunnelLogic.FinalDistance;
 
         actualInvencibleTime -= Time.deltaTime;
-
-        if (actualInvencibleTime > 0)
-        {
-            stateImage.sprite = textureStateInvencible;
-            stateText.text = "Shield";
-        }
-        else
-        {
-            setStateBar();
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -87,6 +76,11 @@ public class PlayerManager : MonoBehaviour
                 totalLives--;
                 actualInvencibleTime = invencibleTime;
                 setStateBar();
+
+                if (SystemInfo.supportsVibration)
+                {
+                    Handheld.Vibrate();
+                }
             }
         }
     }
@@ -102,20 +96,15 @@ public class PlayerManager : MonoBehaviour
 
     private void setStateBar()
     {
-        if (totalLives == 3)
+        if (totalLives == 2)
         {
-            stateImage.sprite = textureState1;
-            stateText.text = "Perfect";
-        }
-        else if (totalLives == 2)
-        {
-            stateImage.sprite = textureState2;
-            stateText.text = "Stable";
+            textureState1.enabled = false;
+            particle1.SetActive(true);
         }
         else
         {
-            stateImage.sprite = textureState3;
-            stateText.text = "Critical";
+            textureState2.enabled = false;
+            particle2.SetActive(true);
         }
     }
 }

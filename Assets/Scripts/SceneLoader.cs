@@ -5,22 +5,22 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void LoadShop()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadSceneAsync(2);
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadSceneAsync(3);
     }
 
     public void LoadLoseScreen()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadSceneAsync(4);
     }
 
     public void Exit()

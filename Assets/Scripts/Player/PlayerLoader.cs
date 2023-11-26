@@ -8,6 +8,11 @@ public class PlayerLoader : MonoBehaviour
 
     private void Start()
     {
+        player.SelectedSpaceShip = null;
+        player.distance = 0;
+        player.maxDistance = 0;
+        player.totalMoney = 0;
+
         LoadMoney();
         LoadMaxDistance();
         LoadSpaceShips();
@@ -66,6 +71,7 @@ public class PlayerLoader : MonoBehaviour
                     //equipped
                     SpaceshipSo[i].bought = true;
                     SpaceshipSo[i].equipped = true;
+                    player.SelectedSpaceShip = SpaceshipSo[i].prefab;
                     isEquipedSomeSpaceShip = true;
                 }
             }
@@ -81,6 +87,7 @@ public class PlayerLoader : MonoBehaviour
         if (!isEquipedSomeSpaceShip)
         {
             SpaceshipSo[0].equipped = true;
+            player.SelectedSpaceShip = SpaceshipSo[0].prefab;
         }
         PlayerPrefs.GetInt(SpaceshipSo[0].Name, 3);
     }
