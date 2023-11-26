@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f405d034b77bf499cdedcf08eb300a, type: 3}
+  m_Name: BigTunnel
+  m_EditorClassIdentifier: 
+  clearTunnelPrefab: {fileID: 1828009144039890359, guid: 08a3743d7457b874f8ddbd354a4606b3, type: 3}
+  CoinTunnelPrefab: {fileID: 1828009144039890359, guid: 96e7916c09b7faa4e97636506ab1bfd6, type: 3}
+  TunnelPrefabs:
+  - {fileID: 1828009144039890359, guid: 81005672a28bc234f83cf830722a94c1, type: 3}
+  - {fileID: 1828009144039890359, guid: 368b9db4071a51942a2535cba8a2c471, type: 3}
+  - {fileID: 1828009144039890359, guid: 0cd8f2b0d9207254798433f8c3ae7958, type: 3}
+  - {fileID: 1828009144039890359, guid: 3de6b6b6bd70010489e0ae3f63103840, type: 3}
+  totalTunnels: 90
+  totalTunnelsForCoin: 12
+  totalTunnelsForObstacles: 3
+  newSpawnDistance: 300
+  newSpeed: 40

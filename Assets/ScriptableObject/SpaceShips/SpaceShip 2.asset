@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df30294ee457ff4db66b20a57cb8c8f, type: 3}
+  m_Name: SpaceShip 2
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2789401429998543385, guid: adbdb96776522ef41bdaad8bf35e50f2, type: 3}
+  Name: JL - 3S
+  Price: 10
+  bought: 1
+  equipped: 0

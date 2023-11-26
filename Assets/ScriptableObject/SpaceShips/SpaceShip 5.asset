@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df30294ee457ff4db66b20a57cb8c8f, type: 3}
+  m_Name: SpaceShip 5
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6385306879579631746, guid: 9d9d9d55fbce97f4bae6f379501d5170, type: 3}
+  Name: CH - 3S0
+  Price: 40
+  bought: 0
+  equipped: 0

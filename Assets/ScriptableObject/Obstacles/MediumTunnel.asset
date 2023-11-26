@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f405d034b77bf499cdedcf08eb300a, type: 3}
+  m_Name: MediumTunnel
+  m_EditorClassIdentifier: 
+  clearTunnelPrefab: {fileID: 1828009144039890359, guid: 1ace8f597fa9ae042becbe179c04f76b, type: 3}
+  CoinTunnelPrefab: {fileID: 1828009144039890359, guid: facbb239b337f424aa4f985a77336e28, type: 3}
+  TunnelPrefabs:
+  - {fileID: 1828009144039890359, guid: 7f17bbd80c16c7f44aafd151ddc25ac9, type: 3}
+  - {fileID: 1828009144039890359, guid: 34f39c06e80696841a48f31087f89708, type: 3}
+  - {fileID: 1828009144039890359, guid: 8ef25c8da7857a44a83da846a46748c1, type: 3}
+  - {fileID: 1828009144039890359, guid: de7be2cf38b8e4f4095d82950e322698, type: 3}
+  totalTunnels: 60
+  totalTunnelsForCoin: 12
+  totalTunnelsForObstacles: 4
+  newSpawnDistance: 250
+  newSpeed: 30

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 400362206}
   - component: {fileID: 400362205}
   - component: {fileID: 400362207}
+  - component: {fileID: 400362208}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -349,6 +350,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dd39a5c8c00b3479242858e4ed6472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &400362208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400362204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10a647e162ebac44819b27113d8e76c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 11400000, guid: d246c03459b3e46498f71db8bd885a21, type: 2}
+  SpaceshipSo:
+  - {fileID: 11400000, guid: 73f47f323bcb5a64a84261e5571d6ec8, type: 2}
+  - {fileID: 11400000, guid: 6972cd6ce45ec504e8618bb3579d26d7, type: 2}
+  - {fileID: 11400000, guid: a1d02c01b633da149b7deb0c700a6b6f, type: 2}
+  - {fileID: 11400000, guid: db8b5bc1133b4e04da4fe3433d1798a9, type: 2}
+  - {fileID: 11400000, guid: b95129cb41f6ba640b813d84593d04ae, type: 2}
+  - {fileID: 11400000, guid: 910771fb936cb554f9a224dac67c1244, type: 2}
+  - {fileID: 11400000, guid: d32b7a54bf0a1a449a9ea9b5a5c9af7b, type: 2}
 --- !u!1 &583549076
 GameObject:
   m_ObjectHideFlags: 0

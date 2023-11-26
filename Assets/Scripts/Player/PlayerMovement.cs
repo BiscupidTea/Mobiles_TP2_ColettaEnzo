@@ -1,11 +1,12 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float angularSpeed;
-    [SerializeField] private float speed;
+    [SerializeField] private VirtualJoystick joystick;
+    public float speed;
     private Rigidbody rb;
+
     private float inputMovementH;
     private float inputMovementV;
 
@@ -13,10 +14,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
+
     private void FixedUpdate()
     {
-        Vector3 finalMovemnt = new Vector3(inputMovementH, inputMovementV, 0);
+        Vector3 finalMovemnt = new Vector3(joystick.Horizontal, joystick.Vertical, 0);
+
         rb.AddForce(finalMovemnt * angularSpeed, ForceMode.VelocityChange);
+
         rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
     }
     public void MovePlayerHorizontal(float input)

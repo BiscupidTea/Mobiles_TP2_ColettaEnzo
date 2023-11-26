@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df30294ee457ff4db66b20a57cb8c8f, type: 3}
+  m_Name: SpaceShip 3
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6242001233191064516, guid: 815fa6081d4e0af4594d5c83bddf4dae, type: 3}
+  Name: O - KMI
+  Price: 20
+  bought: 1
+  equipped: 1
