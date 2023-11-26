@@ -15,5 +15,5 @@ MonoBehaviour:
   prefab: {fileID: 186954922330536466, guid: cebfc844495b03241a63a2f2369c48c8, type: 3}
   Name: Ln - 0
   Price: 5
-  bought: 1
+  bought: 0
   equipped: 0

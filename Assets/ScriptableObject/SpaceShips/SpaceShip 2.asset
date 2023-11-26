@@ -15,5 +15,5 @@ MonoBehaviour:
   prefab: {fileID: 2789401429998543385, guid: adbdb96776522ef41bdaad8bf35e50f2, type: 3}
   Name: JL - 3S
   Price: 10
-  bought: 1
-  equipped: 1
+  bought: 0
+  equipped: 0

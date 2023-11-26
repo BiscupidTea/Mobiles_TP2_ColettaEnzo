@@ -98,8 +98,11 @@ public class Shop : MonoBehaviour
     {
         for (int i = 0; i < SpaceshipSo.Length; i++)
         {
-            SpaceshipSo[i].equipped = false;
-            PlayerPrefs.SetInt(SpaceshipSo[selectedShip].Name, 2);
+            if (SpaceshipSo[i].equipped)
+            {
+                SpaceshipSo[i].equipped = false;
+                PlayerPrefs.SetInt(SpaceshipSo[i].Name, 2);
+            }
         }
 
         if (SpaceshipSo[selectedShip].bought)
