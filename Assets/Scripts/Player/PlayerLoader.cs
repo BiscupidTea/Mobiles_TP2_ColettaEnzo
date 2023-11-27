@@ -5,17 +5,37 @@ public class PlayerLoader : MonoBehaviour
 {
     [SerializeField] private PlayerSo player;
     [SerializeField] private SpaceShipsSo[] SpaceshipSo;
+    private AchivementController achivement;
 
     private void Start()
     {
-        player.SelectedSpaceShip = null;
-        player.distance = 0;
-        player.maxDistance = 0;
-        player.totalMoney = 0;
 
-        LoadMoney();
-        LoadMaxDistance();
-        LoadSpaceShips();
+        if (!PlayerPrefs.HasKey("IsLoaded"))
+        {
+            PlayerPrefs.SetInt("IsLoaded", 0);
+        }
+
+        if (PlayerPrefs.GetInt("IsLoaded") == 0)
+        {
+
+            player.SelectedSpaceShip = null;
+            player.distance = 0;
+            player.maxDistance = 0;
+            player.totalMoney = 0;
+            player.totalLives = 3;
+
+            LoadMoney();
+            LoadMaxDistance();
+            LoadSpaceShips();
+            PlayerPrefs.SetInt("IsLoaded", 1);
+            achivement.FirstTime();
+        }
+
+        if (!Application.isPlaying)
+        {
+            PlayerPrefs.SetInt("IsLoaded", 0);
+        }
+
     }
 
     public void LoadMoney()

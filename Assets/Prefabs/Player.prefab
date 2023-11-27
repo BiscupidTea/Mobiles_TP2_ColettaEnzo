@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 4755493839355614464}
   - component: {fileID: 2077888673956306758}
   - component: {fileID: 3675151581933541086}
+  - component: {fileID: 236250711089414601}
   - component: {fileID: 6013113618316242945}
   - component: {fileID: 3464267335940810402}
   - component: {fileID: 295395150214027973}
@@ -149,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: d246c03459b3e46498f71db8bd885a21, type: 2}
   tunnelLogic: {fileID: 0}
-  parentPosition: {fileID: 0}
+  parentPosition: {fileID: 5739032692220136517}
   finishGame:
     m_PersistentCalls:
       m_Calls:
@@ -165,14 +166,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  invencibleTime: 0
+  invencibleTime: 2
   disteanceText: {fileID: 0}
   cointText: {fileID: 0}
+--- !u!114 &236250711089414601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2780692149251999391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a5c1b11bc723e488d599b156c1631e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   textureState1: {fileID: 0}
   textureState2: {fileID: 0}
   textureState3: {fileID: 0}
-  particle1: {fileID: 610334960302240237}
-  particle2: {fileID: 5782267522499937953}
+  Particles1: {fileID: 610334960302240237}
+  Particles2: {fileID: 5782267522499937953}
 --- !u!114 &6013113618316242945
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,28 +5,27 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadMenu()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(0);
     }
 
     public void LoadShop()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadSceneAsync(3);
+        SceneManager.LoadSceneAsync(2);
     }
 
     public void LoadLoseScreen()
     {
-        SceneManager.LoadSceneAsync(4);
+        SceneManager.LoadSceneAsync(3);
     }
 
     public void Exit()
     {
         Application.Quit();
-
     }
 
     public void SetPause(bool isPaused)

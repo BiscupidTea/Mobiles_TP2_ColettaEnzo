@@ -15,5 +15,5 @@ MonoBehaviour:
   prefab: {fileID: -927199367670048503, guid: 6f679f9f2b4323f4eb8c1e642c986c87, type: 3}
   Name: B1 - T34
   Price: 0
-  bought: 0
-  equipped: 0
+  bought: 1
+  equipped: 1

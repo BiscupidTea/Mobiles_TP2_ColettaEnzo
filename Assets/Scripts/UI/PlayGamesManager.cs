@@ -17,7 +17,7 @@ public class PlayGamesManager : MonoBehaviour
         {
             string name = PlayGamesPlatform.Instance.GetUserDisplayName();
 
-            text.text = name;
+            text.text = "Welcome " + name + "!";
         }
         else
         {

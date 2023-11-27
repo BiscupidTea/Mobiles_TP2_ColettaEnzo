@@ -19,6 +19,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private Text boughtButtonText;
 
     [SerializeField] private float rotationSpeed;
+    private AchivementController achivement;
 
     private int selectedShip = 0;
 
@@ -91,6 +92,8 @@ public class Shop : MonoBehaviour
             PlayerSo.totalMoney -= SpaceshipSo[selectedShip].Price;
             SpaceshipSo[selectedShip].bought = true;
             PlayerPrefs.SetInt(SpaceshipSo[selectedShip].Name, 2);
+
+            achivement.BuyShip();
         }
     }
 

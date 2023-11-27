@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,31 +8,28 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerSo player;
     [SerializeField] private TunnelLogic tunnelLogic;
     [SerializeField] private Transform parentPosition;
-    [SerializeField] private UnityEvent finishGame;
     [SerializeField] private float invencibleTime;
     private float totalCoins;
     private float maxDistance;
+    public IMediator mediator;
+    private List<IObserver> observers = new();
 
     [SerializeField] private Text disteanceText;
     [SerializeField] private Text cointText;
 
-    [SerializeField] private Image textureState1;
-    [SerializeField] private Image textureState2;
-    [SerializeField] private Image textureState3;
-
-    [SerializeField] private GameObject particle1;
-    [SerializeField] private GameObject particle2;
-
     private int totalLives;
     private float actualInvencibleTime;
+    private AchivementController achivement;
 
     private void Start()
     {
+        Time.timeScale = 0;
         Instantiate(player.SelectedSpaceShip.gameObject, parentPosition);
         maxDistance = player.maxDistance;
         totalCoins = player.totalMoney;
         cointText.text = totalCoins.ToString();
         totalLives = player.totalLives;
+        UpdateVisualLife(totalLives);
     }
 
     private void Update()
@@ -43,19 +41,13 @@ public class PlayerManager : MonoBehaviour
             {
                 player.maxDistance = maxDistance;
                 PlayerPrefs.SetFloat("distance", maxDistance);
-                Debug.Log(PlayerPrefs.GetFloat("distance"));
             }
 
-            if (totalCoins > PlayerPrefs.GetFloat("money"))
-            {
-                player.totalMoney = totalCoins;
-                PlayerPrefs.SetFloat("money", totalCoins);
-                Debug.Log(PlayerPrefs.GetFloat("distance"));
-            }
+            player.totalMoney = totalCoins;
+            PlayerPrefs.SetFloat("money", totalCoins);
 
             player.distance = maxDistance;
-
-            finishGame.Invoke();
+            mediator.NotifyPlayerDeath();
         }
 
         disteanceText.text = tunnelLogic.FinalDistance.ToString() + "m";
@@ -63,6 +55,16 @@ public class PlayerManager : MonoBehaviour
         maxDistance = tunnelLogic.FinalDistance;
 
         actualInvencibleTime -= Time.deltaTime;
+
+        if (maxDistance > 100)
+        {
+            achivement.Reach100m();
+        }
+
+        if (totalCoins > 20)
+        {
+            achivement.accumulateCoins();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -74,8 +76,8 @@ public class PlayerManager : MonoBehaviour
             if (actualInvencibleTime <= 0)
             {
                 totalLives--;
+                UpdateVisualLife(totalLives);
                 actualInvencibleTime = invencibleTime;
-                setStateBar();
 
                 if (SystemInfo.supportsVibration)
                 {
@@ -94,17 +96,27 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void setStateBar()
+    public void AddObserver(IObserver observer)
     {
-        if (totalLives == 2)
+        observers.Add(observer);
+    }
+
+    public void RemoveObserver(IObserver observer)
+    {
+        observers.Remove(observer);
+    }
+
+    public void UpdateVisualLife(int newLife)
+    {
+        totalLives = newLife;
+        NotifyObservers();
+    }
+
+    private void NotifyObservers()
+    {
+        foreach (var observer in observers)
         {
-            textureState1.enabled = false;
-            particle1.SetActive(true);
-        }
-        else
-        {
-            textureState2.enabled = false;
-            particle2.SetActive(true);
+            observer.UpdateObserver(totalLives);
         }
     }
 }
