@@ -1,96 +1,182 @@
 package com.coletta.colettalogger;
 
+import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
+import java.io.FileWriter;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.util.Log;
+import android.content.pm.PackageManager;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.Debug;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class Logger {
     private static final String LOGTAG = "ColettaLogg";
-    private static Logger instance = null;
-    private Activity unityActivity;
-    private AlertDialog.Builder builder;
-    private String filename;
-    private List<String> warnings = new ArrayList<>();
-    private List<String> errors = new ArrayList<>();
-    private List<String> debug = new ArrayList<>();
+    List<String> logList = new ArrayList<String>();
+    private String fileName;
+    private static Activity unityActivity;
 
-    // Método para obtener la instancia singleton
-    public static Logger getInstance() {
-        if (instance == null) {
-            instance = new Logger();
+    public static void initialize(Activity context) {
+        unityActivity = context;
+    }
+    AlertDialog.Builder builder;
+    private static Logger _instance = null;
+    public String getLOGTAG(String time) {
+        return LOGTAG + time;
+    }
+
+    public void SendLog(String log) {
+        logList.add(log);
+        Log.d("Unity Log", log);
+
+        SaveLogsToFile();
+    }
+
+    public void SendLog(String log, int logType) {
+        String typeOfLog = "Null";
+        switch (logType) {
+            case 0:
+                Log.v("Unity Log", log);
+                typeOfLog = "Log:";
+                break;
+            case 1:
+                Log.w("Unity Log", log);
+                typeOfLog = "Warning:";
+                break;
+            case 2:
+                Log.e("Unity Log", log);
+                typeOfLog = "Error:";
+                break;
+            case 3:
+                Log.d("Unity Log", log);
+                typeOfLog = "Exception:";
+                break;
+
         }
-        return instance;
+        logList.add(typeOfLog+log);
+        SaveLogsToFile();
+
     }
 
-    // Método para recibir la actividad de Unity
-    public void setUnityActivity(Activity uActivity) {
-        unityActivity = uActivity;
-    }
+    private static final String PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-    // Interfaz de Alerta (Callback)
-    public interface AlertCallback {
-        void onPositive(String message);
-        void onNegative(String message);
-    }
-
-    // Método para escribir en el archivo
-    private void writeToFile(String fileName, List<String> data) {
-        Context context = unityActivity.getApplicationContext();
-        File file = new File(context.getExternalFilesDir(null), fileName);
-
-        try (FileWriter fileWriter = new FileWriter(file, true)) {
-            for (String entry : data) {
-                fileWriter.append(entry).append("\n");
-            }
-        } catch (IOException e) {
-            Log.e(LOGTAG, "Error writing to file: " + e.toString());
-        }
-    }
-
-    // Método para eliminar el archivo de registro
-    public void deleteLogFile() {
-        Context context = unityActivity.getApplicationContext();
-        File logFile = new File(context.getExternalFilesDir(null), filename);
-
-        if (logFile.exists() && logFile.delete()) {
-            Toast.makeText(context, "The file: " + filename + " has been deleted", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "The file: " + filename + " does not exist", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Método para crear una alerta
-    public void createAlert(AlertCallback alertCallback) {
+    public void CreateAlert() {
         builder = new AlertDialog.Builder(unityActivity);
-        builder.setMessage("Do you want to delete the log file?");
-        builder.setCancelable(false);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Are you sure you want to delete the logs file?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.v(LOGTAG, "Press yes");
 
-        builder.setPositiveButton("Yes", (dialogInterface, i) -> {
-            alertCallback.onPositive("Clicked Yes");
-            deleteLogFile();
-            dialogInterface.cancel();
+                DeleteLogs();
+                logList.clear();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                Log.v(LOGTAG, "Press No");
+
+            }
         });
 
-        builder.setNegativeButton("No", (dialogInterface, i) -> {
-            alertCallback.onNegative("Clicked NO");
-            dialogInterface.cancel();
-        });
     }
 
-    // Método para mostrar la alerta
-    public void showAlert() {
-        if (builder != null) {
-            builder.create().show();
-        } else {
-            Log.e(LOGTAG, "Alert not created. Call createAlert() first.");
+    public void ShowAlert() {
+        AlertDialog alert = builder.create();
+        builder.show();
+    }
+
+    private void SaveLogsToFile() {
+
+        Context context = unityActivity.getApplicationContext();
+        try {
+            DeleteLogs();
+            File logFile = new File(context.getExternalFilesDir(null), "ColettaLoggerUnity" + ".txt");
+            FileWriter fileWriter = new FileWriter(logFile, true);
+
+            for (String log : logList) {
+                fileWriter.append(log).append("\n");
+            }
+            Log.v("FileWriter", context.getExternalFilesDir(null).toString());
+            fileWriter.close();
+        } catch (IOException e) {
+            Log.v("FileWriter", "Failed To write");
+            Toast.makeText(unityActivity.getApplicationContext(), "Failed To write", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void DeleteLogs() {
+
+        Context context = unityActivity.getApplicationContext();
+
+        File logFile = new File(context.getExternalFilesDir(null), "ColettaLoggerUnity.txt");
+        if (logFile.exists()) {
+
+            if (logFile.delete()) {
+                Log.i("FileDeleted", "File ColettaLoggerUnity.txt deleted successfully.");
+
+            } else {
+                Log.e("FileDeleteError", "Failed to delete file " + fileName + ".txt");
+
+            }
+        }
+        else
+        {
+            Log.e("FileDeleteError", "No file to delete");
+
+        }
+
+    }
+    private String readFile()
+    {
+        Context context = unityActivity.getApplicationContext();
+        File file = new File(context.getExternalFilesDir(null),"ColettaLoggerUnity.txt");
+        Log.v("FileReader", context.getExternalFilesDir(null).toString());
+        byte[] content = new byte[(int)file.length()];
+        if (file.exists())
+        {
+            try
+            {
+                FileInputStream inputStream =  new FileInputStream(file);
+                inputStream.read(content);
+                return new String(content);
+            }
+            catch (IOException e)
+            {
+                Log.e("ReadFile", "Can not read file");
+                return "Can not read file";
+            }
+        }
+        else
+        {
+            Log.e("ReadFile", "File not found ");
+            return "File doest Exist";
+
         }
     }
 }
