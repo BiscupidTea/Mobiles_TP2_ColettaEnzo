@@ -1,7 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class LoggerMobileAndroid : MonoBehaviour
@@ -43,7 +43,7 @@ public class LoggerMobileAndroid : MonoBehaviour
         if (Application.platform == RuntimePlatform.Android)
         {
             string logs = pluginInstance.Call<string>("readFile");
-            string[] lines = logs.Split(new[] { "\n", "\r\n" }, System.StringSplitOptions.None);
+            string[] lines = logs.Split("\n");
 
             if (logsList.Capacity > 0)
             {
@@ -56,10 +56,12 @@ public class LoggerMobileAndroid : MonoBehaviour
             foreach (string line in lines)
             {
                 GameObject textObject = Instantiate(textMeshProPrefab, contentParent);
+                textObject.SetActive(true);
                 TextMeshProUGUI textComponent = textObject.GetComponent<TextMeshProUGUI>();
                 textComponent.text = line;
                 logsList.Add(textObject);
             }
+
         }
     }
 

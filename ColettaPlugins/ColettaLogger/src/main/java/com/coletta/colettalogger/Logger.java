@@ -33,8 +33,8 @@ import androidx.core.content.ContextCompat;
 public class Logger {
     private static final String LOGTAG = "ColettaLogg";
     List<String> logList = new ArrayList<String>();
-    private String fileName;
-    private static Activity unityActivity;
+    public String fileName;
+    public static Activity unityActivity;
 
     public static void initialize(Activity context) {
         unityActivity = context;
