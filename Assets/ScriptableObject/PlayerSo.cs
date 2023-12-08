@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerSo : ScriptableObject
 {
     public int totalLives;
-    public float totalMoney;
+    public int totalMoney;
     public float distance;
     public float maxDistance;
     public GameObject SelectedSpaceShip;

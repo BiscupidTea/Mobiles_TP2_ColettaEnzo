@@ -5,37 +5,43 @@ public class PlayerLoader : MonoBehaviour
 {
     [SerializeField] private PlayerSo player;
     [SerializeField] private SpaceShipsSo[] SpaceshipSo;
-    private AchivementController achivement;
+    //private AchivementController achivement;
 
     private void Start()
     {
+        player.SelectedSpaceShip = null;
+        player.distance = 0;
+        player.maxDistance = 0;
+        player.totalMoney = 0;
+        player.totalLives = 3;
 
-        if (!PlayerPrefs.HasKey("IsLoaded"))
+        LoadMoney();
+        LoadMaxDistance();
+        LoadSpaceShips();
+        //achivement.FirstTime();
+
+        Debug.Log("Money :" + player.totalMoney);
+        Debug.Log("MaxDistance :" + player.maxDistance);
+        for (int i = 0; i < SpaceshipSo.Length; i++)
         {
-            PlayerPrefs.SetInt("IsLoaded", 0);
+            if (SpaceshipSo[i].bought)
+            {
+                Debug.Log(SpaceshipSo[i].name + " : bought");
+            }
+            else
+            {
+                Debug.Log(SpaceshipSo[i].name + " : no bought");
+            }
+
+            if (SpaceshipSo[i].equipped)
+            {
+                Debug.Log(SpaceshipSo[i].name + " : equipped");
+            }
+            else
+            {
+                Debug.Log(SpaceshipSo[i].name + " : no equipped");
+            }
         }
-
-        if (PlayerPrefs.GetInt("IsLoaded") == 0)
-        {
-
-            player.SelectedSpaceShip = null;
-            player.distance = 0;
-            player.maxDistance = 0;
-            player.totalMoney = 0;
-            player.totalLives = 3;
-
-            LoadMoney();
-            LoadMaxDistance();
-            LoadSpaceShips();
-            PlayerPrefs.SetInt("IsLoaded", 1);
-            achivement.FirstTime();
-        }
-
-        if (!Application.isPlaying)
-        {
-            PlayerPrefs.SetInt("IsLoaded", 0);
-        }
-
     }
 
     public void LoadMoney()
@@ -43,12 +49,13 @@ public class PlayerLoader : MonoBehaviour
         //Load Money
         if (PlayerPrefs.HasKey("money"))
         {
-            player.totalMoney = PlayerPrefs.GetFloat("money");
+            player.totalMoney = PlayerPrefs.GetInt("money");
         }
         else
         {
             player.totalMoney = 0;
-            PlayerPrefs.SetFloat("money", 0);
+            PlayerPrefs.SetInt("money", 0);
+            PlayerPrefs.Save();
         }
     }
 
@@ -63,6 +70,7 @@ public class PlayerLoader : MonoBehaviour
         {
             player.maxDistance = 0;
             PlayerPrefs.SetFloat("distance", 0);
+            PlayerPrefs.Save();
         }
     }
 

@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private TunnelLogic tunnelLogic;
     [SerializeField] private Transform parentPosition;
     [SerializeField] private float invencibleTime;
-    private float totalCoins;
+    private int totalCoins;
     private float maxDistance;
     public IMediator mediator;
     private List<IObserver> observers = new();
@@ -40,11 +40,13 @@ public class PlayerManager : MonoBehaviour
             if (maxDistance > PlayerPrefs.GetFloat("distance"))
             {
                 player.maxDistance = maxDistance;
-                PlayerPrefs.SetFloat("distance", maxDistance);
+                PlayerPrefs.SetFloat("distance", player.maxDistance);
+                PlayerPrefs.Save();
             }
 
             player.totalMoney = totalCoins;
-            PlayerPrefs.SetFloat("money", totalCoins);
+            PlayerPrefs.SetInt("money", player.totalMoney);
+            PlayerPrefs.Save();
 
             player.distance = maxDistance;
             mediator.NotifyPlayerDeath();

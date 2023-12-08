@@ -92,8 +92,10 @@ public class Shop : MonoBehaviour
             PlayerSo.totalMoney -= SpaceshipSo[selectedShip].Price;
             SpaceshipSo[selectedShip].bought = true;
             PlayerPrefs.SetInt(SpaceshipSo[selectedShip].Name, 2);
+            PlayerPrefs.SetInt("money", PlayerSo.totalMoney);
 
             achivement.BuyShip();
+            PlayerPrefs.Save();
         }
     }
 
