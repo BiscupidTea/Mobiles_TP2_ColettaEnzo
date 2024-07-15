@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerSo player;
-    [SerializeField] private TunnelLogic tunnelLogic;
+    [FormerlySerializedAs("obstacleManager")] [FormerlySerializedAs("tunnelLogic")] [SerializeField] private ObstaclesManager obstaclesManager;
     [SerializeField] private Transform parentPosition;
     [SerializeField] private float invencibleTime;
     private int totalCoins;
@@ -52,9 +53,9 @@ public class PlayerManager : MonoBehaviour
             mediator.NotifyPlayerDeath();
         }
 
-        disteanceText.text = tunnelLogic.FinalDistance.ToString() + "m";
+        disteanceText.text = obstaclesManager.FinalDistance.ToString() + "m";
         cointText.text = totalCoins.ToString();
-        maxDistance = tunnelLogic.FinalDistance;
+        maxDistance = obstaclesManager.FinalDistance;
 
         actualInvencibleTime -= Time.deltaTime;
 
@@ -71,7 +72,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.GetComponent<Obstacle>())
         {
             collision.gameObject.GetComponent<Obstacle>().DestroyObstacle();
 

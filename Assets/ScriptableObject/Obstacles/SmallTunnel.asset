@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f405d034b77bf499cdedcf08eb300a, type: 3}
   m_Name: SmallTunnel
   m_EditorClassIdentifier: 
-  clearTunnelPrefab: {fileID: 1828009144039890359, guid: bdbf753849b195f4399bdbfe68ae0cef, type: 3}
-  CoinTunnelPrefab: {fileID: 1828009144039890359, guid: 4e37206d957ad5545b8bb0efecf563ad, type: 3}
-  TunnelPrefabs:
-  - {fileID: 1828009144039890359, guid: 33cc4b588af4186478a0fcaf4eb06839, type: 3}
-  - {fileID: 1828009144039890359, guid: fc7dd3b41db6d5a4ca639ffe769f0f6e, type: 3}
-  - {fileID: 1828009144039890359, guid: 72b704506de887d4ab66171142f50d1b, type: 3}
-  - {fileID: 1828009144039890359, guid: 722ce18ecd9b1084aaef35b2db89d710, type: 3}
+  TunnelPrefab: {fileID: 1828009144039890359, guid: bdbf753849b195f4399bdbfe68ae0cef, type: 3}
+  obstaclePrefab: {fileID: 5002920844338998776, guid: db6af730623becc4688b00b2ab5065b9, type: 3}
+  coinPrefab: {fileID: 4872880869949696609, guid: 555bcac4c13954c41b1e8761287ec445, type: 3}
   totalTunnels: 30
   totalTunnelsForCoin: 14
   totalTunnelsForObstacles: 5

@@ -15,13 +15,23 @@ public class PlayerLoader : MonoBehaviour
         player.totalMoney = 0;
         player.totalLives = 3;
 
+
+        //achivement.FirstTime();
+
+
+    }
+
+    public void SavePlayer()
+    {
+        
+    }
+
+    public void LoadPlayer()
+    {
         LoadMoney();
         LoadMaxDistance();
         LoadSpaceShips();
-        //achivement.FirstTime();
 
-        Debug.Log("Money :" + player.totalMoney);
-        Debug.Log("MaxDistance :" + player.maxDistance);
         for (int i = 0; i < SpaceshipSo.Length; i++)
         {
             if (SpaceshipSo[i].bought)
