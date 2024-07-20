@@ -98,14 +98,6 @@ public class SingleTerrain : MonoBehaviour
         {
             PositionAndTransform.Add(list.tagPosition, list.position);
         }
-        
-        Position newPosition1 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition];
-        Position newPosition2 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition + 1];
-        
-        startPoint = PositionAndTransform[newPosition1]
-            .position;
-        endPoint = PositionAndTransform[newPosition2]
-            .position;
     }
 
     public void SpawnCoin()
@@ -118,13 +110,17 @@ public class SingleTerrain : MonoBehaviour
     public void SpawnObstacle()
     {
         obstaclePrefab.SetActive(true);
-        obstaclePrefab.transform.position = positionList[Random.Range(0, 5)].position.position;
-        SetObstaclePattern();
-    }
-
-    private void SetObstaclePattern()
-    {
         currentPaternObstacle = (Patterns)Random.Range(0, ObstaclePatterns.Count);
+        obstaclePrefab.transform.position = PositionAndTransform[ObstaclePatterns[currentPaternObstacle].ToArray()[0]].position;
+        currentPosition = 0;
+        
+        Position newPosition1 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition];
+        Position newPosition2 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition + 1];
+        
+        startPoint = PositionAndTransform[newPosition1]
+            .position;
+        endPoint = PositionAndTransform[newPosition2]
+            .position;
     }
 
     private void OnDisable()

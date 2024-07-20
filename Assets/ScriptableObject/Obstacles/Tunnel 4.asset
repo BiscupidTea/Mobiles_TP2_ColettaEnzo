@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3f405d034b77bf499cdedcf08eb300a, type: 3}
-  m_Name: Tunnel 2
+  m_Name: Tunnel 4
   m_EditorClassIdentifier: 
-  totalDistance: 30
-  totalTunnelsForCoin: 14
-  totalTunnelsForObstacles: 4
+  totalDistance: 50
+  totalTunnelsForCoin: 10
+  totalTunnelsForObstacles: 2
   newPlayerSpeed: 22
-  newObstacleSpeed: 1
+  newObstacleSpeed: 0.6

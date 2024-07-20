@@ -264,6 +264,8 @@ MonoBehaviour:
   tunnelsSo:
   - {fileID: 11400000, guid: df750ebde5dea4247a341af11e1e0ffa, type: 2}
   - {fileID: 11400000, guid: 2df70ec170294804a9e87b770a1e8b81, type: 2}
+  - {fileID: 11400000, guid: f6ecffee6305a40478fb196da176249a, type: 2}
+  - {fileID: 11400000, guid: bea57c34a9b7a0547bd5d7248b0f954f, type: 2}
   terrainPrefab: {fileID: 1828009144039890359, guid: bdbf753849b195f4399bdbfe68ae0cef, type: 3}
   spawnDistance: 200
   eliminateDistance: 50
@@ -2329,6 +2331,10 @@ PrefabInstance:
       propertyPath: textureState3
       value: 
       objectReference: {fileID: 1845552394}
+    - target: {fileID: 444969010033162778, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 610334960302240237, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2336,6 +2342,10 @@ PrefabInstance:
     - target: {fileID: 734159166766663897, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
       propertyPath: lengthInSec
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823294386983716876, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 49.54
       objectReference: {fileID: 0}
     - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
       propertyPath: InitialModule.startSize.scalar
