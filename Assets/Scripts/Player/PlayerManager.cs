@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private ObstaclesManager obstaclesManager;
     [SerializeField] private Transform parentPosition;
     [SerializeField] private float invencibleTime;
+    [SerializeField] private AudioSource crashSound;
     private int totalCoins;
     private float maxDistance;
     public IMediator mediator;
@@ -80,6 +81,7 @@ public class PlayerManager : MonoBehaviour
 
             if (actualInvencibleTime <= 0)
             {
+                crashSound.Play();
                 totalLives--;
                 UpdateVisualLife(totalLives);
                 actualInvencibleTime = invencibleTime;
@@ -96,7 +98,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Coin")
+        if (other.GetComponent<Coin>())
         {
             totalCoins++;
             other.gameObject.GetComponent<Coin>().DestroyObstacle();

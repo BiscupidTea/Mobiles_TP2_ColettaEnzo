@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private AudioSource picksound;
+    [SerializeField] private ParticleSystem _particleSystem;
+
     public void DestroyObstacle()
     {
-        gameObject.SetActive(false);
+        picksound.Play();
+        _particleSystem.Play();
+        gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 }

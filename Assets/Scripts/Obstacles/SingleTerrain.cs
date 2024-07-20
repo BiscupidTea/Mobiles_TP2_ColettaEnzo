@@ -111,6 +111,7 @@ public class SingleTerrain : MonoBehaviour
     public void SpawnCoin()
     {
         coinPrefab.SetActive(true);
+        coinPrefab.GetComponent<BoxCollider>().enabled = true;
         coinPrefab.transform.position = positionList[Random.Range(0, 5)].position.position;
     }
 
@@ -154,8 +155,6 @@ public class SingleTerrain : MonoBehaviour
                 {
                     nextPosition = 0;
                 }
-
-                Debug.Log(gameObject.name + " Current position = " + currentPosition + " - Next Position = " + nextPosition);    
                 
                 Position newPosition1 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition];
                 Position newPosition2 = ObstaclePatterns[currentPaternObstacle].ToArray()[nextPosition];

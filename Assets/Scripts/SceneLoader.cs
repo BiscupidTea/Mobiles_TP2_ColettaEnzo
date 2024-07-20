@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,10 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadMenu()
     {
+        if (SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            SoundManager.Instance.PlayMenuMusic();
+        }
         SceneManager.LoadSceneAsync(0);
     }
 
@@ -20,6 +25,7 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadLoseScreen()
     {
+        SoundManager.Instance.PlayLoseMusic();
         SceneManager.LoadSceneAsync(3);
     }
 
