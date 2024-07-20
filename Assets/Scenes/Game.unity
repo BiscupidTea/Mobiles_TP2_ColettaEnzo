@@ -263,7 +263,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 209148743}
   tunnelsSo:
   - {fileID: 11400000, guid: df750ebde5dea4247a341af11e1e0ffa, type: 2}
-  terrainList: []
+  - {fileID: 11400000, guid: 2df70ec170294804a9e87b770a1e8b81, type: 2}
+  terrainPrefab: {fileID: 1828009144039890359, guid: bdbf753849b195f4399bdbfe68ae0cef, type: 3}
   spawnDistance: 200
   eliminateDistance: 50
   FinalDistance: 0
@@ -627,7 +628,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4315895842297396424, guid: bdbf753849b195f4399bdbfe68ae0cef, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2206,6 +2208,42 @@ PrefabInstance:
       propertyPath: textureState3
       value: 
       objectReference: {fileID: 1845552394}
+    - target: {fileID: 610334960302240237, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 734159166766663897, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSpeed.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201430303061775129, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startLifetime.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2780692149251999391, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2234,6 +2272,14 @@ PrefabInstance:
       propertyPath: finishGame.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1618209222}
+    - target: {fileID: 3875973439264797558, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3875973439264797558, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4755493839355614464, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2274,10 +2320,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5263378535858521180, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263378535858521180, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263378535858521180, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263378535858521180, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263378535858521180, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startSpeed.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263378535858521180, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263378535858521180, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: InitialModule.startLifetime.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782267522499937953, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6013113618316242945, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
       propertyPath: joystick
       value: 
       objectReference: {fileID: 56668894}
+    - target: {fileID: 6752595726942674844, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7083162313284281395, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7083162313284281395, guid: acc3b2f1e14cdde4dae47ebd6becd535, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

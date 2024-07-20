@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3834119939647555834}
   - component: {fileID: 6326864702194089654}
   m_Layer: 0
-  m_Name: BigTunnelObstacle
+  m_Name: TunnelObstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -1.909199e-14, y: -0.00000003774895, z: 1, w: 0.00000050576216}
   m_LocalPosition: {x: -0.44675907, y: 14, z: 0.84891003}
-  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

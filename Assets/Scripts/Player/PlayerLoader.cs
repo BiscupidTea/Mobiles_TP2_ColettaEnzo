@@ -9,16 +9,13 @@ public class PlayerLoader : MonoBehaviour
 
     private void Start()
     {
-        player.SelectedSpaceShip = null;
+        //player.SelectedSpaceShip = null;
         player.distance = 0;
         player.maxDistance = 0;
         player.totalMoney = 0;
         player.totalLives = 3;
-
-
+        
         //achivement.FirstTime();
-
-
     }
 
     public void SavePlayer()

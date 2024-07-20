@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using EZCameraShake;
 
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerSo player;
-    [FormerlySerializedAs("obstacleManager")] [FormerlySerializedAs("tunnelLogic")] [SerializeField] private ObstaclesManager obstaclesManager;
+    [SerializeField] private ObstaclesManager obstaclesManager;
     [SerializeField] private Transform parentPosition;
     [SerializeField] private float invencibleTime;
     private int totalCoins;
@@ -31,6 +32,7 @@ public class PlayerManager : MonoBehaviour
         cointText.text = totalCoins.ToString();
         totalLives = player.totalLives;
         UpdateVisualLife(totalLives);
+        
     }
 
     private void Update()
@@ -81,7 +83,9 @@ public class PlayerManager : MonoBehaviour
                 totalLives--;
                 UpdateVisualLife(totalLives);
                 actualInvencibleTime = invencibleTime;
-
+                
+                CameraShaker.Instance.ShakeOnce(6, 6, 0.5f, 0.5f);
+                
                 if (SystemInfo.supportsVibration)
                 {
                     Handheld.Vibrate();

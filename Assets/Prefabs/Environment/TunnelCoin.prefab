@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 3806334291072727713}
   - component: {fileID: -8768947951399065173}
   m_Layer: 0
-  m_Name: MediumTunnelCoin
+  m_Name: TunnelCoin
   m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

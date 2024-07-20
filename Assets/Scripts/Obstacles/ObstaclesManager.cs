@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ObstaclesManager : MonoBehaviour
 {
@@ -9,19 +7,44 @@ public class ObstaclesManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
 
     [Header("Game Data")] [SerializeField] private TunnelsSo[] tunnelsSo;
-    [SerializeField] private List<GameObject> terrainList;
+    [SerializeField] private GameObject terrainPrefab;
 
-    [Header("Entities Data")] [SerializeField]
-    private float spawnDistance;
-
+    [Header("Entities Data")] [SerializeField] private float spawnDistance;
     [SerializeField] private float eliminateDistance;
-
-    private int TotalTunnelsPassed;
+    
     public int FinalDistance;
     private int ActualTunnelSO = 0;
 
     private int ActualTunnelCoin = 0;
     private int ActualTunnelObstacle = 0;
+
+    private Queue<GameObject> terrainPool;
+    private List<GameObject> activeTerrains;
+
+    void Start()
+    {
+        terrainPool = new Queue<GameObject>();
+        activeTerrains = new List<GameObject>();
+        
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = Instantiate(terrainPrefab);
+            obj.SetActive(false);
+            terrainPool.Enqueue(obj);
+        }
+
+        SetNewValues();
+    }
+
+    private void SetNewValues()
+    {
+        player.GetComponent<PlayerMovement>().speed = tunnelsSo[ActualTunnelSO].newPlayerSpeed;
+
+        foreach (GameObject o in terrainPool)
+        {
+            o.GetComponent<SingleTerrain>().obstacleSpeed = tunnelsSo[ActualTunnelSO].newObstacleSpeed;
+        }
+    }
 
     void Update()
     {
@@ -34,12 +57,10 @@ public class ObstaclesManager : MonoBehaviour
 
     private void CheckTunnelState()
     {
-        if (ActualTunnelObstacle > tunnelsSo[ActualTunnelSO].totalTunnels)
+        if (FinalDistance >= tunnelsSo[ActualTunnelSO].totalDistance && ActualTunnelSO + 1 < tunnelsSo.Length)
         {
-            if (tunnelsSo[ActualTunnelSO + 1] != null)
-            {
-                ActualTunnelSO++;
-            }
+            ActualTunnelSO++;
+            SetNewValues();
         }
     }
 
@@ -47,39 +68,51 @@ public class ObstaclesManager : MonoBehaviour
     {
         ActualTunnelCoin++;
         ActualTunnelObstacle++;
-        
-        GameObject newTerrain =
-            Instantiate(tunnelsSo[ActualTunnelSO].TunnelPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        GameObject newTerrain;
+        if (terrainPool.Count > 0)
+        {
+            newTerrain = terrainPool.Dequeue();
+        }
+        else
+        {
+            newTerrain = Instantiate(terrainPrefab);
+        }
+
+        newTerrain.transform.position = spawnPoint.position;
+        newTerrain.transform.rotation = spawnPoint.rotation;
+        newTerrain.SetActive(true);
+
         SingleTerrain tunnelPrefab = newTerrain.GetComponent<SingleTerrain>();
 
         if (ActualTunnelObstacle >= tunnelsSo[ActualTunnelSO].totalTunnelsForObstacles)
         {
-            tunnelPrefab.SpawnObstacle(tunnelsSo[ActualTunnelSO].obstaclePrefab);
-            newTerrain.name = newTerrain.name + " Obstacle";
+            tunnelPrefab.SpawnObstacle();
             ActualTunnelObstacle = 0;
         }
         else if (ActualTunnelCoin >= tunnelsSo[ActualTunnelSO].totalTunnelsForCoin)
         {
-            tunnelPrefab.SpawnCoin(tunnelsSo[ActualTunnelSO].coinPrefab);
-            newTerrain.name = newTerrain.name + " Coin";
+            tunnelPrefab.SpawnCoin();
             ActualTunnelCoin = 0;
         }
 
-
         spawnPoint.position = tunnelPrefab.finalPoint.position;
+        activeTerrains.Add(newTerrain);
+
         EliminateTerrain();
     }
 
     void EliminateTerrain()
     {
-        for (int i = 0; i < terrainList.Count; i++)
+        for (int i = 0; i < activeTerrains.Count; i++)
         {
-            if (player.transform.position.z - terrainList[i].transform.position.z > eliminateDistance)
+            if (player.transform.position.z - activeTerrains[i].transform.position.z > eliminateDistance)
             {
-                Destroy(terrainList[i]);
-                terrainList.RemoveAt(i);
-
-                TotalTunnelsPassed++;
+                GameObject obj = activeTerrains[i];
+                obj.SetActive(false);
+                terrainPool.Enqueue(obj);
+                activeTerrains.RemoveAt(i);
+                
                 FinalDistance++;
                 break;
             }

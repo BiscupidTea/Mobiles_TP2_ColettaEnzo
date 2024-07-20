@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class SingleTerrain : MonoBehaviour
@@ -15,13 +14,17 @@ public class SingleTerrain : MonoBehaviour
     }
 
     public Transform finalPoint;
+    public GameObject obstaclePrefab;
+    public GameObject coinPrefab;
+
+    private Vector3 startPoint;
+    private Vector3 endPoint;
+    private float timePass = 0;
+
     [SerializeField] private PositionsList[] positionList;
     private Dictionary<Position, Transform> PositionAndTransform = new Dictionary<Position, Transform>();
-
-    private GameObject coin = null;
-
-    private GameObject obstacle = null;
-    [SerializeField] private float obstacleVelocity;
+    
+    public float obstacleSpeed;
     private Patterns currentPaternObstacle;
     private int currentPosition = 0;
 
@@ -51,15 +54,6 @@ public class SingleTerrain : MonoBehaviour
         SQUAREupleft,
         SQUAREdownright,
         SQUAREdownleft,
-
-        L1247,
-        L3689,
-        L1236,
-        L4789,
-        L1258,
-        L2358,
-        L2578,
-        L2589,
     }
 
     private Dictionary<Patterns, List<Position>> ObstaclePatterns = new Dictionary<Patterns, List<Position>>
@@ -81,19 +75,21 @@ public class SingleTerrain : MonoBehaviour
             new List<Position> { Position.LeftDown, Position.Left, Position.Center, Position.Left, Position.LeftUp }
         },
 
-        { Patterns.SQUAREupright, new List<Position> { Position.RightUp, Position.Right, Position.Center, Position.Up } },
-        { Patterns.SQUAREupleft, new List<Position> { Position.LeftUp, Position.LeftUp, Position.Center, Position.Up } },
-        { Patterns.SQUAREdownright, new List<Position> { Position.RightDown, Position.Right, Position.Center, Position.Down } },
-        { Patterns.SQUAREdownleft, new List<Position> { Position.LeftDown, Position.Left, Position.Center, Position.Down } },
-        
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
-        // { Patterns.Tup, new List<Position> { Position.RightUp, Position.Up, Position.LeftUp } },
+        {
+            Patterns.SQUAREupright,
+            new List<Position> { Position.RightUp, Position.Right, Position.Center, Position.Up }
+        },
+        {
+            Patterns.SQUAREupleft, new List<Position> { Position.LeftUp, Position.LeftUp, Position.Center, Position.Up }
+        },
+        {
+            Patterns.SQUAREdownright,
+            new List<Position> { Position.RightDown, Position.Right, Position.Center, Position.Down }
+        },
+        {
+            Patterns.SQUAREdownleft,
+            new List<Position> { Position.LeftDown, Position.Left, Position.Center, Position.Down }
+        },
     };
 
     private void Awake()
@@ -102,59 +98,75 @@ public class SingleTerrain : MonoBehaviour
         {
             PositionAndTransform.Add(list.tagPosition, list.position);
         }
-    }
-
-    public void SpawnCoin(GameObject coinPrefab)
-    {
-        coin = Instantiate(coinPrefab, positionList[Random.Range(0, 5)].position.position, Quaternion.identity,
-            transform);
-    }
-
-    public void SpawnObstacle(GameObject enemyPrefab)
-    {
-        obstacle = Instantiate(enemyPrefab, positionList[Random.Range(0, 5)].position.position, Quaternion.identity,
-            transform);
         
-        obstacle.GetComponent<Obstacle>().OnDestroyObstacle.AddListener(OnDestroyObstacle);
+        Position newPosition1 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition];
+        Position newPosition2 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition + 1];
+        
+        startPoint = PositionAndTransform[newPosition1]
+            .position;
+        endPoint = PositionAndTransform[newPosition2]
+            .position;
+    }
 
+    public void SpawnCoin()
+    {
+        coinPrefab.SetActive(true);
+        coinPrefab.transform.position = positionList[Random.Range(0, 5)].position.position;
+    }
+
+    public void SpawnObstacle()
+    {
+        obstaclePrefab.SetActive(true);
+        obstaclePrefab.transform.position = positionList[Random.Range(0, 5)].position.position;
         SetObstaclePattern();
     }
 
     private void SetObstaclePattern()
     {
         currentPaternObstacle = (Patterns)Random.Range(0, ObstaclePatterns.Count);
-
-        StartCoroutine(SetNewPositionToObstacle());
     }
 
-    private void OnDestroyObstacle()
+    private void OnDisable()
     {
-        StopCoroutine(SetNewPositionToObstacle());
+        obstaclePrefab.SetActive(false);
+        coinPrefab.SetActive(false);
     }
 
-    IEnumerator SetNewPositionToObstacle()
+    private void Update()
     {
-        do
+        if (obstaclePrefab)
         {
-            float timePass = 0;
+            obstaclePrefab.transform.position = Vector3.Lerp(startPoint, endPoint, timePass / obstacleSpeed);
+            timePass += Time.deltaTime;
 
-            Vector3 startPoint =
-                PositionAndTransform[ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition]]
-                    .position;
-            Vector3 endPoint =
-                PositionAndTransform[ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition + 1]]
-                    .position;
-
-            while (timePass < obstacleVelocity)
+            if (obstaclePrefab.transform.position == endPoint)
             {
-                obstacle.transform.position = Vector3.Lerp(startPoint, endPoint, timePass / obstacleVelocity);
-                timePass += Time.deltaTime;
-                yield return null;
+                currentPosition++;
+
+                if (currentPosition >= ObstaclePatterns[currentPaternObstacle].Count)
+                {
+                    currentPosition = 0;
+                }
+                
+                int nextPosition = currentPosition + 1;
+                
+                if (nextPosition >= ObstaclePatterns[currentPaternObstacle].Count)
+                {
+                    nextPosition = 0;
+                }
+
+                Debug.Log(gameObject.name + " Current position = " + currentPosition + " - Next Position = " + nextPosition);    
+                
+                Position newPosition1 = ObstaclePatterns[currentPaternObstacle].ToArray()[currentPosition];
+                Position newPosition2 = ObstaclePatterns[currentPaternObstacle].ToArray()[nextPosition];
+        
+                startPoint = PositionAndTransform[newPosition1]
+                    .position;
+                endPoint = PositionAndTransform[newPosition2]
+                    .position;
+                
+                timePass = 0;
             }
-
-            currentPosition++;
-
-            yield return null;
-        } while (currentPosition < ObstaclePatterns[currentPaternObstacle].Count - 1);
+        }
     }
 }

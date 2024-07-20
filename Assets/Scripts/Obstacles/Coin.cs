@@ -6,6 +6,6 @@ public class Coin : MonoBehaviour
 {
     public void DestroyObstacle()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
