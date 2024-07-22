@@ -19,7 +19,6 @@ public class Shop : MonoBehaviour
     [SerializeField] private Text boughtButtonText;
 
     [SerializeField] private float rotationSpeed;
-    private AchivementController achivement;
 
     private int selectedShip = 0;
 
@@ -29,7 +28,8 @@ public class Shop : MonoBehaviour
 
         for (int i = 0; i < SpaceshipSo.Length; i++)
         {
-            GameObject spawnNew = Instantiate(SpaceshipSo[i].prefab.gameObject, parent.position, parent.rotation, parent);
+            GameObject spawnNew =
+                Instantiate(SpaceshipSo[i].prefab.gameObject, parent.position, parent.rotation, parent);
             spawnNew.SetActive(false);
             gameSpaceship[i] = spawnNew;
         }
@@ -38,6 +38,20 @@ public class Shop : MonoBehaviour
 
         name.text = SpaceshipSo[selectedShip].Name;
         price.text = SpaceshipSo[selectedShip].Price.ToString() + "$";
+
+        bool hasSpaceship = false;
+        foreach (SpaceShipsSo shipsSo in SpaceshipSo)
+        {
+            if (shipsSo.equipped)
+            {
+                hasSpaceship = true;
+            }
+        }
+
+        if (!hasSpaceship)
+        {
+            SpaceshipSo[0].equipped = true;
+        }
     }
 
     private void Update()
@@ -62,6 +76,7 @@ public class Shop : MonoBehaviour
         {
             selectedShip = 0;
         }
+
         gameSpaceship[selectedShip].SetActive(true);
 
         name.text = SpaceshipSo[selectedShip].Name;
@@ -79,6 +94,7 @@ public class Shop : MonoBehaviour
         {
             selectedShip = gameSpaceship.Length - 1;
         }
+
         gameSpaceship[selectedShip].SetActive(true);
 
         name.text = SpaceshipSo[selectedShip].Name;
@@ -91,31 +107,28 @@ public class Shop : MonoBehaviour
         {
             PlayerSo.totalMoney -= SpaceshipSo[selectedShip].Price;
             SpaceshipSo[selectedShip].bought = true;
-            PlayerPrefs.SetInt(SpaceshipSo[selectedShip].Name, 2);
-            PlayerPrefs.SetInt("money", PlayerSo.totalMoney);
+            AchivementController.Instance.BuyShip();
 
-            achivement.BuyShip();
-            PlayerPrefs.Save();
+            DataLoader.Instance.OpenSave(true);
         }
     }
 
-    public void equippedSpaceShip()
+    public void EquippedSpaceShip()
     {
         for (int i = 0; i < SpaceshipSo.Length; i++)
         {
             if (SpaceshipSo[i].equipped)
             {
                 SpaceshipSo[i].equipped = false;
-                PlayerPrefs.SetInt(SpaceshipSo[i].Name, 2);
             }
         }
 
         if (SpaceshipSo[selectedShip].bought)
         {
-            PlayerPrefs.SetInt(SpaceshipSo[selectedShip].Name, 3);
             SpaceshipSo[selectedShip].equipped = true;
-            PlayerSo.SelectedSpaceShip = SpaceshipSo[selectedShip].prefab;
         }
+
+        DataLoader.Instance.OpenSave(true);
     }
 
     public void SetVisibleButton()

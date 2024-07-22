@@ -4,21 +4,23 @@ using UnityEngine;
 public class AchivementController : MonoBehaviour
 {
     public static AchivementController Instance;
-    private bool hasBeenAutenticated;
 
-    private void Start()
+    private void OnEnable()
     {
         if (Instance == null)
         {
             Instance = this;
-        }
 #if UNITY_ANDROID
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
-            hasBeenAutenticated = true;
-
-        FirstTime();
-        Debug.Log("PlayGamesPlatform.Instance.localUser.authenticated : " + PlayGamesPlatform.Instance.localUser.authenticated);
+            FirstTime();
+            Debug.Log("PlayGamesPlatform.Instance.localUser.authenticated : " +
+                      PlayGamesPlatform.Instance.localUser.authenticated);
 #endif
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void ShowAchievements()
@@ -34,21 +36,7 @@ public class AchivementController : MonoBehaviour
 #if UNITY_ANDROID
         if (PlayGamesPlatform.Instance.localUser.authenticated)
         {
-            if (!PlayerPrefs.HasKey("FirstTime"))
-            {
-                PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQAQ", 100f, succes =>
-                  {
-                      if (succes)
-                      {
-                          Debug.Log("Achievement unlocked: FirstTime");
-                          PlayerPrefs.SetInt("FirstTime", 1);
-                      }
-                      else
-                      {
-                          Debug.LogError("Failed to unlock achievement: FirstTime");
-                      }
-                  });
-            }
+            PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQAQ", 100f, succes => { });
         }
 #endif
     }
@@ -58,21 +46,7 @@ public class AchivementController : MonoBehaviour
 #if UNITY_ANDROID
         if (PlayGamesPlatform.Instance.localUser.authenticated)
         {
-            if (!PlayerPrefs.HasKey("FirstTime"))
-            {
-                PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQAg", 100f, succes =>
-            {
-                if (succes)
-                {
-                    Debug.Log("Achievement unlocked: Reach100m");
-                    PlayerPrefs.SetInt("Reach100m", 1);
-                }
-                else
-                {
-                    Debug.LogError("Failed to unlock achievement: Reach100m");
-                }
-            });
-            }
+            PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQAg", 100f, succes => { });
         }
 #endif
     }
@@ -82,45 +56,17 @@ public class AchivementController : MonoBehaviour
 #if UNITY_ANDROID
         if (PlayGamesPlatform.Instance.localUser.authenticated)
         {
-            if (!PlayerPrefs.HasKey("FirstTime"))
-            {
-                PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQAw", 100f, succes =>
-            {
-                if (succes)
-                {
-                    Debug.Log("Achievement unlocked: BuyShip");
-                    PlayerPrefs.SetInt("BuyShip", 1);
-                }
-                else
-                {
-                    Debug.LogError("Failed to unlock achievement: BuyShip");
-                }
-            });
-            }
+            PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQAw", 100f, succes => { });
         }
 #endif
     }
 
-    public void accumulateCoins()
+    public void AccumulateCoins()
     {
 #if UNITY_ANDROID
         if (PlayGamesPlatform.Instance.localUser.authenticated)
         {
-            if (!PlayerPrefs.HasKey("FirstTime"))
-            {
-                PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQBA", 100f, succes =>
-                 {
-                     if (succes)
-                     {
-                         Debug.Log("Achievement unlocked: accumulateCoins");
-                         PlayerPrefs.SetInt("accumulateCoins", 1);
-                     }
-                     else
-                     {
-                         Debug.LogError("Failed to unlock achievement: accumulateCoins");
-                     }
-                 });
-            }
+            PlayGamesPlatform.Instance.ReportProgress("CgkI34T7ibsPEAIQBA", 100f, succes => { });
         }
 #endif
     }

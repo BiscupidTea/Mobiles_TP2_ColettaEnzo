@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df30294ee457ff4db66b20a57cb8c8f, type: 3}
   m_Name: SpaceShip 5
   m_EditorClassIdentifier: 
+  ID: 5
   prefab: {fileID: 6385306879579631746, guid: 9d9d9d55fbce97f4bae6f379501d5170, type: 3}
   Name: CH - 3S0
   Price: 40

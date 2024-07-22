@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df30294ee457ff4db66b20a57cb8c8f, type: 3}
   m_Name: SpaceShip 6
   m_EditorClassIdentifier: 
+  ID: 6
   prefab: {fileID: 6761891067775679905, guid: 74eea32dcdc51e74eb86071b9c6823c1, type: 3}
   Name: F - 4U
   Price: 50

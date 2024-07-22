@@ -3,17 +3,19 @@ using UnityEngine.Android;
 
 public class DebugManager : MonoBehaviour
 {
-    public static DebugManager Instance { get; private set; }
-    private void Awake()
+    
+    public static DebugManager Instance;
+    
+    private void OnEnable()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(this);
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            Instance = this;
-            DontDestroyOnLoad(this);
+            Destroy(this.gameObject);
         }
     }
 

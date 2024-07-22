@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,7 +9,7 @@ public class PlayerSo : ScriptableObject
 {
     public int totalLives;
     public int totalMoney;
+    public int moneyToCharge;
     public float distance;
     public float maxDistance;
-    public GameObject SelectedSpaceShip;
 }

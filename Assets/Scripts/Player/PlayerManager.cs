@@ -22,37 +22,30 @@ public class PlayerManager : MonoBehaviour
 
     private int totalLives;
     private float actualInvencibleTime;
-    private AchivementController achivement;
 
     private void Start()
     {
         Time.timeScale = 0;
-        Instantiate(player.SelectedSpaceShip.gameObject, parentPosition);
+        Instantiate(DataLoader.Instance.GetCurrentPlayerSpaceShip().prefab, parentPosition);
         maxDistance = player.maxDistance;
         totalCoins = player.totalMoney;
         cointText.text = totalCoins.ToString();
         totalLives = player.totalLives;
+
         UpdateVisualLife(totalLives);
-        
     }
 
     private void Update()
     {
         if (totalLives <= 0)
         {
-
-            if (maxDistance > PlayerPrefs.GetFloat("distance"))
+            player.moneyToCharge = totalCoins;
+            player.distance = maxDistance;
+            if (player.distance > player.maxDistance)
             {
-                player.maxDistance = maxDistance;
-                PlayerPrefs.SetFloat("distance", player.maxDistance);
-                PlayerPrefs.Save();
+                player.maxDistance = player.distance;
             }
 
-            player.totalMoney = totalCoins;
-            PlayerPrefs.SetInt("money", player.totalMoney);
-            PlayerPrefs.Save();
-
-            player.distance = maxDistance;
             mediator.NotifyPlayerDeath();
         }
 
@@ -64,12 +57,7 @@ public class PlayerManager : MonoBehaviour
 
         if (maxDistance > 100)
         {
-            achivement.Reach100m();
-        }
-
-        if (totalCoins > 20)
-        {
-            achivement.accumulateCoins();
+            AchivementController.Instance.Reach100m();
         }
     }
 
@@ -85,9 +73,9 @@ public class PlayerManager : MonoBehaviour
                 totalLives--;
                 UpdateVisualLife(totalLives);
                 actualInvencibleTime = invencibleTime;
-                
+
                 CameraShaker.Instance.ShakeOnce(6, 6, 0.5f, 0.5f);
-                
+
                 if (SystemInfo.supportsVibration)
                 {
                     Handheld.Vibrate();
