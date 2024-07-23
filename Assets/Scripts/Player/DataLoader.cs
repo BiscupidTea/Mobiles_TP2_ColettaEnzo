@@ -4,7 +4,6 @@ using System.Text;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataLoader : MonoBehaviour
@@ -20,7 +19,6 @@ public class DataLoader : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            Debug.LogError("awake");
             OpenSave(false);
             DontDestroyOnLoad(this.gameObject);
         }

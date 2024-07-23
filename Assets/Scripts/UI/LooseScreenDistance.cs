@@ -37,7 +37,7 @@ public class LooseScreenDistance : MonoBehaviour
     {
         if (canWatchAd)
         {
-            UnityAdsManager.Instance.LoadRewardedAd();
+            UnityAdsManager.Instance.ShowRewardedAd();
             player.moneyToCharge = player.moneyToCharge * 2;
             totalCoins.text = player.moneyToCharge.ToString();
             canWatchAd = false;

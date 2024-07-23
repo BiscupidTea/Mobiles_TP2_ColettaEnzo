@@ -52,6 +52,8 @@ public class UnityAdsManager : MonoBehaviour, IUnityAdsInitializationListener, I
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(_gameId, testMode, this);
+            Advertisement.Load(REWARDED_VIDEO_PLACEMENT, this);
+            Advertisement.Load(VIDEO_PLACEMENT, this);
         }
     }
 
@@ -73,7 +75,6 @@ public class UnityAdsManager : MonoBehaviour, IUnityAdsInitializationListener, I
     public void LoadRewardedAd()
     {
         Advertisement.Load(REWARDED_VIDEO_PLACEMENT, this);
-        ShowRewardedAd();
     }
 
     public void ShowRewardedAd()
@@ -84,7 +85,6 @@ public class UnityAdsManager : MonoBehaviour, IUnityAdsInitializationListener, I
     public void LoadNonRewardedAd()
     {
         Advertisement.Load(VIDEO_PLACEMENT, this);
-        ShowNonRewardedAd();
     }
 
     public void ShowNonRewardedAd()
