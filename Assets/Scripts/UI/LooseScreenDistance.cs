@@ -30,7 +30,7 @@ public class LooseScreenDistance : MonoBehaviour
             AchivementController.Instance.AccumulateCoins();
         }
         
-        DataLoader.Instance.SaveData();
+        DataLoader.Instance.SaveProgress();
     }
 
     public void DuplicatePlayerMoney()

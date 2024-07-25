@@ -109,7 +109,7 @@ public class Shop : MonoBehaviour
             SpaceshipSo[selectedShip].bought = true;
             AchivementController.Instance.BuyShip();
 
-            DataLoader.Instance.SaveData();
+            DataLoader.Instance.SaveProgress();
         }
     }
 
@@ -128,7 +128,7 @@ public class Shop : MonoBehaviour
             SpaceshipSo[selectedShip].equipped = true;
         }
 
-        DataLoader.Instance.SaveData();
+        DataLoader.Instance.SaveProgress();
     }
 
     public void SetVisibleButton()

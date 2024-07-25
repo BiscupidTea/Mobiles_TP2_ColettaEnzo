@@ -7,7 +7,6 @@ using UnityEngine;
 [Serializable]
 public class SpaceShipsSo : ScriptableObject
 {
-    public int ID;
     public GameObject prefab;
     public string Name;
     public int Price;
