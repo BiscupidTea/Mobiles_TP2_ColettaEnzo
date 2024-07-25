@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
@@ -13,16 +14,27 @@ public class PlayGamesManager : MonoBehaviour
 
     internal void ProcessAuthentication(SignInStatus status)
     {
-        if (status == SignInStatus.Success)
+        PlayGamesPlatform.Instance.Authenticate((success) =>
         {
-            string name = PlayGamesPlatform.Instance.GetUserDisplayName();
+            if (success == SignInStatus.Success)
+            {
+                Debug.Log("Login with Google Play games successful.");
 
-            text.text = "Welcome " + name + "!";
-        }
-        else
-        {
-            text.text = "Error, Sign in Failed!";
-        }
+                string name = PlayGamesPlatform.Instance.GetUserDisplayName();
+                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                {
+                    Debug.Log("Authorization code: " + code);
+                    
+                });
+                
+                text.text = "Welcome " + name + "!";
+            }
+            else
+            {
+                Debug.Log("Login Unsuccessful");
+                text.text = "Error, Sign in Failed!";
+            }
+        });
     }
 
 }

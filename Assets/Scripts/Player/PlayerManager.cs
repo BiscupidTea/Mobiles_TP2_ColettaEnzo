@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
         Time.timeScale = 0;
         Instantiate(DataLoader.Instance.GetCurrentPlayerSpaceShip().prefab, parentPosition);
         maxDistance = player.maxDistance;
-        totalCoins = player.totalMoney;
+        totalCoins = 0;
         cointText.text = totalCoins.ToString();
         totalLives = player.totalLives;
 

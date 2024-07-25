@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-using GooglePlayGames.BasicApi.SavedGame;
 using UnityEngine;
+using System.IO;
 
 public class DataLoader : MonoBehaviour
 {
@@ -12,14 +9,23 @@ public class DataLoader : MonoBehaviour
     [SerializeField] private PlayerSo player;
     [SerializeField] private List<SpaceShipsSo> spaceShips;
 
+    private string PlayerDataPath;
+    private string SpaceShipDataPath;
+
     private bool isSaving;
-    
+
+    private void Awake()
+    {
+        PlayerDataPath = Application.persistentDataPath + "/playerData.json";
+        SpaceShipDataPath = Application.persistentDataPath + "/spaceShipsData.json";
+    }
+
     private void OnEnable()
     {
         if (Instance == null)
         {
             Instance = this;
-            OpenSave(false);
+            LoadData();
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -28,126 +34,46 @@ public class DataLoader : MonoBehaviour
         }
     }
 
-    private void ResetPlayerValues()
+    public void LoadData()
     {
-        player.distance = 0;
-        player.maxDistance = 0;
-
-        player.moneyToCharge = 0;
-        player.totalMoney = 0;
-
-        player.totalLives = 3;
-
-        foreach (SpaceShipsSo ship in spaceShips)
+        if (File.Exists(PlayerDataPath))
         {
-            ship.bought = false;
-            ship.equipped = false;
-        }
+            string jsonData = File.ReadAllText(PlayerDataPath);
+            PlayerDataSerializable data = JsonUtility.FromJson<PlayerDataSerializable>(jsonData);
 
-        spaceShips.ToArray()[0].bought = true;
-    }
-
-    public void OpenSave(bool saving)
-    {
-        if (Social.localUser.authenticated)
-        {
-            isSaving = saving;
-            ((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution("SaveFile",
-                DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, SaveGameOpen);
-        }
-    }
-
-    private void SaveGameOpen(SavedGameRequestStatus status, ISavedGameMetadata meta)
-    {
-        if (status == SavedGameRequestStatus.Success)
-        {
-            if (isSaving)
-            {
-                byte[] myData = ASCIIEncoding.ASCII.GetBytes(GetSaveString());
-
-                SavedGameMetadataUpdate UpdateMetaData = new SavedGameMetadataUpdate.Builder()
-                    .WithUpdatedDescription("Update data at: " + DateTime.Now.ToString()).Build();
-
-                ((PlayGamesPlatform)Social.Active).SavedGame.CommitUpdate(meta, UpdateMetaData, myData, SaveCallback);
-            }
-            else
-            {
-                ((PlayGamesPlatform)Social.Active).SavedGame.ReadBinaryData(meta, LoadCallBackData);
-            }
+            PlayerSo playerData = ScriptableObject.CreateInstance<PlayerSo>();
+            data.CopyTo(playerData);
+            
+            Debug.Log("Player data load successfully.");
         }
         else
         {
-            ResetPlayerValues();
-        }
-    }
-
-    private void LoadCallBackData(SavedGameRequestStatus status, byte[] data)
-    {
-        if (status == SavedGameRequestStatus.Success)
-        {
-            string LoadedData = ASCIIEncoding.ASCII.GetString(data);
-
-            LoadSaveString(LoadedData);
-        }
-    }
-
-    private void LoadSaveString(string loadedData)
-    {
-        string[] cloudStringData = loadedData.Split('|');
-
-        int totalMoney = int.Parse(cloudStringData[0]);
-        float maxDistance = float.Parse(cloudStringData[1]);
-
-        string[] shipsData = cloudStringData[2].Split(';');
-        foreach (string shipData in shipsData)
-        {
-            if (string.IsNullOrWhiteSpace(shipData)) continue;
-
-            string[] shipParts = shipData.Split(',');
-
-            int id = int.Parse(shipParts[0]);
-            bool bought = shipParts[1] == "1";
-            bool equipped = shipParts[2] == "1";
-
-            SpaceShipsSo ship = spaceShips.Find(s => s.ID == id);
-            if (ship != null)
-            {
-                ship.bought = bought;
-                ship.equipped = equipped;
-            }
-        }
-    }
-
-    private string GetSaveString()
-    {
-        string dataToSave = "";
-
-        dataToSave += player.totalMoney;
-        dataToSave += "|";
-        dataToSave += player.maxDistance;
-        dataToSave += "|";
-
-        foreach (SpaceShipsSo ship in spaceShips)
-        {
-            dataToSave += ship.ID;
-            dataToSave += ",";
-            dataToSave += ship.bought ? "1" : "0";
-            dataToSave += ",";
-            dataToSave += ship.equipped ? "1" : "0";
-            dataToSave += ";";
+            Debug.LogWarning("Player data file not found, Set base value.");
+            SetDefaultPlayerValues();
         }
 
-        return dataToSave;
-    }
-
-    private void SaveCallback(SavedGameRequestStatus status, ISavedGameMetadata meta)
-    {
-        if (status == SavedGameRequestStatus.Success)
+        if (File.Exists(SpaceShipDataPath))
         {
+            string jsonData = File.ReadAllText(SpaceShipDataPath);
+            SpaceShipsListWrapper wrapper = JsonUtility.FromJson<SpaceShipsListWrapper>(jsonData);
+            spaceShips = wrapper.spaceShipsList;
+            Debug.Log("SpaceShips data load successfully.");
         }
         else
         {
+            Debug.LogWarning("SpaceShips data file not found, Set base value.");
+            SetDefaultSpaceshipValues();
         }
+    }
+
+    public void SaveData()
+    {
+        PlayerDataSerializable data = new PlayerDataSerializable(player);
+        string jsonData = JsonUtility.ToJson(data);
+        File.WriteAllText(PlayerDataPath, jsonData);
+
+        jsonData = JsonUtility.ToJson(new SpaceShipsListWrapper(spaceShips));
+        File.WriteAllText(SpaceShipDataPath, jsonData);
     }
 
     public SpaceShipsSo GetCurrentPlayerSpaceShip()
@@ -162,5 +88,67 @@ public class DataLoader : MonoBehaviour
 
         Debug.Log("Fail to pick spaceship, return base");
         return spaceShips.ToArray()[0];
+    }
+
+    private void SetDefaultPlayerValues()
+    {
+        player.distance = 0;
+        player.maxDistance = 0;
+
+        player.moneyToCharge = 0;
+        player.totalMoney = 0;
+
+        player.totalLives = 3;
+    }
+
+    private void SetDefaultSpaceshipValues()
+    {
+        foreach (SpaceShipsSo ship in spaceShips)
+        {
+            ship.bought = false;
+            ship.equipped = false;
+        }
+
+        spaceShips.ToArray()[0].bought = true;
+        spaceShips.ToArray()[0].equipped = true;
+    }
+
+    [System.Serializable]
+    private class SpaceShipsListWrapper
+    {
+        public List<SpaceShipsSo> spaceShipsList;
+
+        public SpaceShipsListWrapper(List<SpaceShipsSo> spaceShipsList)
+        {
+            this.spaceShipsList = spaceShipsList;
+        }
+    }
+    
+    [System.Serializable]
+    private class PlayerDataSerializable
+    {
+        public int totalLives;
+        public int totalMoney;
+        public int moneyToCharge;
+        public float distance;
+        public float maxDistance;
+
+        public PlayerDataSerializable(PlayerSo playerData)
+        {
+            totalLives = playerData.totalLives;
+            totalMoney = playerData.totalMoney;
+            moneyToCharge = playerData.moneyToCharge;
+            distance = playerData.distance;
+            maxDistance = playerData.maxDistance;
+        }
+
+        public void CopyTo(PlayerSo playerData)
+        {
+            playerData.totalLives = totalLives;
+            playerData.totalMoney = totalMoney;
+            playerData.moneyToCharge = moneyToCharge;
+            playerData.distance = distance;
+            playerData.maxDistance = maxDistance;
+        }
     }
 }

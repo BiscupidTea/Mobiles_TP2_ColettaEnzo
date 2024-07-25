@@ -22,7 +22,7 @@ public class LooseScreenDistance : MonoBehaviour
 
     public void AssingValuesToPlayerStats()
     {
-        player.totalMoney = player.moneyToCharge;
+        player.totalMoney =  player.totalMoney + player.moneyToCharge;
         player.moneyToCharge = 0;
         
         if (player.totalMoney > 20)
@@ -30,7 +30,7 @@ public class LooseScreenDistance : MonoBehaviour
             AchivementController.Instance.AccumulateCoins();
         }
         
-        DataLoader.Instance.OpenSave(true);
+        DataLoader.Instance.SaveData();
     }
 
     public void DuplicatePlayerMoney()
