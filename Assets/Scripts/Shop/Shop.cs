@@ -110,6 +110,7 @@ public class Shop : MonoBehaviour
             AchivementController.Instance.BuyShip();
 
             DataLoader.Instance.SaveProgress();
+            AnalyticsManager.Instance.HandleReportPurchase(SpaceshipSo[selectedShip].Name, SpaceshipSo[selectedShip].Price);
         }
     }
 
@@ -129,6 +130,7 @@ public class Shop : MonoBehaviour
         }
 
         DataLoader.Instance.SaveProgress();
+        PlayerSo.pickedSpaceShip = SpaceshipSo[selectedShip].Name;
     }
 
     public void SetVisibleButton()

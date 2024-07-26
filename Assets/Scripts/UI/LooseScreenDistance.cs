@@ -1,3 +1,4 @@
+using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -31,6 +32,7 @@ public class LooseScreenDistance : MonoBehaviour
         }
         
         DataLoader.Instance.SaveProgress();
+        AnalyticsManager.Instance.HandleReportMaxDistanceMade((int)player.maxDistance, player.pickedSpaceShip);
     }
 
     public void DuplicatePlayerMoney()

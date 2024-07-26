@@ -17,3 +17,4 @@ MonoBehaviour:
   moneyToCharge: 0
   distance: 0
   maxDistance: 0
+  pickedSpaceShip: B1 - T34

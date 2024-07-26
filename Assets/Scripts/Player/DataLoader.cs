@@ -49,6 +49,11 @@ public class DataLoader : MonoBehaviour
         {
             spaceShips[i].bought = data.Item2[i].bought;
             spaceShips[i].equipped = data.Item2[i].equipped;
+
+            if (spaceShips[i].equipped)
+            {
+                player.pickedSpaceShip = spaceShips[i].Name;
+            }
         }
     }
 

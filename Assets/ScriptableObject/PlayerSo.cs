@@ -12,4 +12,5 @@ public class PlayerSo : ScriptableObject
     public int moneyToCharge;
     public float distance;
     public float maxDistance;
+    public string pickedSpaceShip;
 }
