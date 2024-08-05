@@ -2320,17 +2320,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1003121651 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5454199834162411917, guid: 9e7ae1d601447044f8ec8f4cf9c2302a, type: 3}
-  m_PrefabInstance: {fileID: 7248267600736665858}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06618857e7b332e47967240312a5fb29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1018731867
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,6 +3296,7 @@ GameObject:
   - component: {fileID: 1427442742}
   - component: {fileID: 1427442741}
   - component: {fileID: 1427442740}
+  - component: {fileID: 1427442743}
   m_Layer: 5
   m_Name: Achievents
   m_TagString: Untagged
@@ -3378,9 +3368,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1003121651}
-        m_TargetAssemblyTypeName: AchivementController, Assembly-CSharp
-        m_MethodName: ShowAchievements
+      - m_Target: {fileID: 1427442743}
+        m_TargetAssemblyTypeName: InstancesCallScript, Assembly-CSharp
+        m_MethodName: ShowAchievents
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3428,6 +3418,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427442738}
   m_CullTransparentMesh: 1
+--- !u!114 &1427442743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427442738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651394da67e74234cbe311cc43792f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1460232903
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.Advertisements;
-using UnityEngine;
 
 public class UnityAdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener,
     IUnityAdsShowListener

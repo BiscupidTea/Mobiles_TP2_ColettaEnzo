@@ -1122,6 +1122,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1618209224}
         m_TargetAssemblyTypeName: LooseScreenDistance, Assembly-CSharp
+        m_MethodName: ShowAdd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1618209224}
+        m_TargetAssemblyTypeName: LooseScreenDistance, Assembly-CSharp
         m_MethodName: AssingValuesToPlayerStats
         m_Mode: 1
         m_Arguments:
@@ -1676,6 +1688,7 @@ GameObject:
   - component: {fileID: 1403837465}
   - component: {fileID: 1403837464}
   - component: {fileID: 1403837463}
+  - component: {fileID: 1403837466}
   m_Layer: 5
   m_Name: Ads
   m_TagString: Untagged
@@ -1759,6 +1772,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1403837466}
+        m_TargetAssemblyTypeName: InstancesCallScript, Assembly-CSharp
+        m_MethodName: CallAddReward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1403837464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1797,6 +1822,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403837461}
   m_CullTransparentMesh: 1
+--- !u!114 &1403837466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403837461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651394da67e74234cbe311cc43792f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1447355147
 GameObject:
   m_ObjectHideFlags: 0
